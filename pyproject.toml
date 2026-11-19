@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reaqua"
+version = "3.0.0"
+description = "ReAqua - mała retencja przeciw suszy: wtyczka QGIS, CLI i panel WWW"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Maciej Andrzejewski" },
+  { name = "Weronika Zator" },
+  { name = "Kacper Mikołajczyk" },
+  { name = "Tomasz Szulski" },
+]
+dynamic = ["dependencies"]
+
+[project.scripts]
+reaqua = "reaqua.cli:main"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+reaqua = ["icon.png", "metadata.txt", "web/templates/*.html"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"
