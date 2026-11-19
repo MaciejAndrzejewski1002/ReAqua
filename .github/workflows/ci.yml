@@ -32,6 +32,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Budowa obrazu
         run: docker build -t reaqua:ci .
+      - name: Diagnostyka bibliotek rastrowych w kontenerze
+        run: docker run --rm reaqua:ci python -c "import rasterio, pyproj, numpy, scipy; print(rasterio.__version__, pyproj.__version__, numpy.__version__)"
       - name: Test demonstracyjny w kontenerze
         run: docker run --rm reaqua:ci python -m reaqua demo --out /tmp/out --db /tmp/demo.gpkg --size 300
       - name: Test kolejki scen (submit i worker) w kontenerze

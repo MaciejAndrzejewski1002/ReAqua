@@ -11,12 +11,15 @@ import numpy as np
 
 from .models import Grid
 
+IMPORT_ERRORS = []
+
 try:
     from osgeo import gdal, osr
 
     gdal.UseExceptions()
     BACKEND = "gdal"
-except ImportError:
+except ImportError as exc_gdal:
+    IMPORT_ERRORS.append(f"osgeo: {exc_gdal}")
     gdal = osr = None
     try:
         import rasterio
@@ -25,7 +28,8 @@ except ImportError:
         from rasterio.warp import Resampling, reproject
 
         BACKEND = "rasterio"
-    except ImportError:
+    except ImportError as exc_rasterio:
+        IMPORT_ERRORS.append(f"rasterio: {exc_rasterio}")
         BACKEND = None
 
 _BAND_RULES = {
@@ -38,7 +42,10 @@ _RES_RANK = {"10m": 0, "20m": 1, "60m": 2}
 
 def require_backend():
     if BACKEND is None:
-        raise RuntimeError("Brak biblioteki rastrowej: zainstaluj rasterio (poza QGIS) lub użyj Pythona z QGIS.")
+        raise RuntimeError(
+            "Brak biblioteki rastrowej: zainstaluj rasterio (poza QGIS) lub użyj Pythona z QGIS. "
+            "Szczegóły: " + "; ".join(IMPORT_ERRORS)
+        )
 
 
 def read_raster(path: str) -> tuple:
