@@ -1,0 +1,31 @@
+id	title	section	person	status	due	note
+T01	Analiza merytoryczna trzech wtyczek i poprawki błędów	1.1 Konfiguracja i README	Maciej Andrzejewski	Done	2026-11-02	docs/ANALIZA_MERYTORYCZNA.md
+T02	Rdzeń: klasyfikacja suszy i wybór lokalizacji zbiorników	3.1 Czytelność i struktura kodu	Maciej Andrzejewski	Done	2026-11-02	src/reaqua/core/spectral.py, scout.py
+T03	Rdzeń: kriging i zasięg oddziaływania	3.1 Czytelność i struktura kodu	Kacper Mikołajczyk	Done	2026-11-02	src/reaqua/core/kriging.py
+T04	Rdzeń: hydrologia, koszty, raport regionalny	3.1 Czytelność i struktura kodu	Weronika Zator	Done	2026-11-02	src/reaqua/core/hydrology.py, report.py
+T05	Baza wyników GeoPackage	6 Prezentacja końcowa	Tomasz Szulski	Done	2026-11-02	src/reaqua/db/geopackage.py
+T06	API i panel WWW (wizualizacja, pobieranie danych)	6 Prezentacja końcowa	Tomasz Szulski	Done	2026-11-02	src/reaqua/web/app.py
+T07	Testy jednostkowe i integracyjne (53 testy)	5.1 Testy i workflows (CI/CD)	Tomasz Szulski	Done	2026-11-02	tests/
+T08	requirements.txt i pliki konfiguracyjne	4.1 Konfiguracja środowiska (Docker)	Kacper Mikołajczyk	Done	2026-11-02	requirements*.txt, pyproject.toml, .flake8
+T09	Dockerfile i docker-compose.yml	4.1 Konfiguracja środowiska (Docker)	Kacper Mikołajczyk	Done	2026-11-02	Usługi seed, worker, web; uruchomienie do sprawdzenia (zadanie T14)
+T10	Workflow GitHub Actions	5.1 Testy i workflows (CI/CD)	Tomasz Szulski	Done	2026-11-02	.github/workflows/ci.yml; status do sprawdzenia po push (T23)
+T11	README i dokumentacja (checklista, metodologia, Docker)	1.1 Konfiguracja i README	Weronika Zator	Done	2026-11-02	README.md, docs/
+T12	Wtyczka QGIS: menu kontekstowe, zadania w tle	3.1 Czytelność i struktura kodu	Maciej Andrzejewski	Done	2026-11-02	Kod gotowy; nie uruchamiany w prawdziwym QGIS (T13)
+T13	Test wtyczki w QGIS 3.22 i w najnowszym wydaniu	3.1 Czytelność i struktura kodu	Weronika Zator	Todo	2026-11-10	Zainstalować reaqua.zip, uruchomić na data/sample
+T14	Uruchomienie docker compose up --build	4.1 Konfiguracja środowiska (Docker)	Tomasz Szulski	Todo	2026-11-06	Oczekiwany wynik: panel pod http://localhost:8000
+T15	Utworzenie repozytorium na GitHubie	1.1 Konfiguracja i README	Maciej Andrzejewski	Todo	2026-11-04	Nazwa: ReAqua
+T16	Dodanie współpracowników (Settings, Collaborators)	1.1 Konfiguracja i README	Maciej Andrzejewski	Todo	2026-11-06	Wszyscy muszą zaakceptować zaproszenie
+T17	Podmiana miejsc zastępczych (konto GitHub, e-mail)	1.1 Konfiguracja i README	Maciej Andrzejewski	Todo	2026-11-05	README.md, src/reaqua/metadata.txt
+T18	Pierwszy push z historią commitów modułami	2.2 Korzystanie z Git	Maciej Andrzejewski	Todo	2026-11-09	Opisowe komunikaty, nie jeden commit
+T19	Commity własnych części przez każdego autora	2.2 Korzystanie z Git	Cały zespół	Todo	2026-12-04	Własne konta, pull requesty; kontrola w Insights
+T20	Utworzenie tablicy Kanban (Todo, In Progress, Done)	2.1 Organizacja pracy na GitHubie	Tomasz Szulski	Todo	2026-11-09	GitHub Projects, szablon Board
+T21	Wprowadzenie zadań na tablicę i przypisanie osób	2.1 Organizacja pracy na GitHubie	Tomasz Szulski	Todo	2026-11-10	Zadania z tego arkusza; pole Assignees
+T22	Bieżąca aktualizacja tablicy i harmonogramu	2.1 Organizacja pracy na GitHubie	Weronika Zator	Todo	2026-12-11	Zadanie ciągłe do końca semestru
+T23	Sprawdzenie zielonego statusu GitHub Actions	5.1 Testy i workflows (CI/CD)	Tomasz Szulski	Todo	2026-11-11	Zakładka Actions: test, docker, plugin
+T24	Weryfikacja literatury i współczynników roboczych	1.1 Konfiguracja i README	Kacper Mikołajczyk	Todo	2026-11-27	docs/ANALIZA_MERYTORYCZNA.md, sekcja 4
+T25	Podział długich funkcji (zasada jednej odpowiedzialności)	3.1 Czytelność i struktura kodu	Maciej Andrzejewski	Todo	2026-11-27	7 funkcji powyżej 50 linii; potem pytest i flake8
+T26	Przygotowanie prezentacji końcowej (baza, wykres, pobieranie)	6 Prezentacja końcowa	Cały zespół	Todo	2026-12-10	Pokaz: panel WWW, GeoPackage w QGIS, eksport
+T27	Test ręczny przed oddaniem	6 Prezentacja końcowa	Cały zespół	Todo	2026-12-11	Lista w docs/CHECKLISTA.md
+T28	Oddanie projektu	6 Prezentacja końcowa	Cały zespół	Todo	2026-12-17	Termin do ustalenia z prowadzącą
+T29	Kolejka scen i worker: wgrywanie scen przez panel WWW	4.1 Konfiguracja środowiska (Docker)	Tomasz Szulski	Done	2026-11-02	src/reaqua/inbox.py, web/scenes.py; docs/DOCKER.md
+T30	Test wgrywania sceny przez panel WWW w Dockerze	4.1 Konfiguracja środowiska (Docker)	Tomasz Szulski	Todo	2026-11-10	Pliki data/sample (B04, B08, B11); sprawdzić pobranie wyników
