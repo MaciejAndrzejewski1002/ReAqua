@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}ReAqua - panel wyników{% endblock %}
+{% block content %}
+<h1>ReAqua - panel wyników</h1>
+{% if run %}
+<div class="meta">Analiza nr {{ run.id }} &middot; {{ run.created_at }} &middot; {{ run.region or "obszar badań" }} &middot; źródło mitygacji: {{ run.mitigation_source }}</div>
+
+<div class="cards">
+  <div class="card"><b>{{ stats.n }}</b><span>zbiorniki</span></div>
+  <div class="card"><b>{{ "%.1f"|format(stats.area_ha) }} ha</b><span>powierzchnia lustra</span></div>
+  <div class="card"><b>{{ "{:,.0f}".format(stats.volume_m3).replace(",", " ") }} m³</b><span>pojemność</span></div>
+  <div class="card"><b>{{ "%.1f"|format(run.mci or 0) }}%</b><span>MCI</span></div>
+  <div class="card"><b>{{ "%.1f"|format(run.mei or 0) }}%</b><span>MEI</span></div>
+  <div class="card"><b>{{ "%.1f"|format(stats.cost_min / 1e6) }}-{{ "%.1f"|format(stats.cost_max / 1e6) }} mln zł</b><span>koszt budowy</span></div>
+</div>
+
+<h2>Wizualizacja</h2>
+<div class="charts">{{ figures.map|safe }}{{ figures.cost|safe }}{{ figures.volume|safe }}</div>
+
+<h2>Pobieranie danych</h2>
+<div class="links">
+  <a href="/api/reservoirs?format=geojson&run_id={{ run.id }}">GeoJSON</a>
+  <a href="/api/reservoirs?format=csv&run_id={{ run.id }}">CSV</a>
+  <a href="/api/reservoirs?format=json&run_id={{ run.id }}">JSON</a>
+  <a href="/api/stats?run_id={{ run.id }}">Wskaźniki (JSON)</a>
+  <a href="/api/runs">Lista analiz (JSON)</a>
+</div>
+
+<h2>Zbiorniki</h2>
+<table>
+<tr><th>Priorytet</th><th>Klasa suszy</th><th>Powierzchnia [ha]</th><th>Pojemność [m³]</th><th>Koszt średni [zł]</th><th>Lon</th><th>Lat</th></tr>
+{% for r in rows %}
+<tr><td>{{ r.priorytet }}</td><td>{{ r.opis }}</td><td>{{ "%.2f"|format(r.pow_zb_ha) }}</td><td>{{ "{:,.0f}".format(r.obj_m3).replace(",", " ") }}</td>
+<td>{{ "{:,.0f}".format(r.koszt_sr_pln).replace(",", " ") }}</td><td>{{ "%.5f"|format(r.lon) }}</td><td>{{ "%.5f"|format(r.lat) }}</td></tr>
+{% endfor %}
+</table>
+
+<h2>Historia analiz</h2>
+<table>
+<tr><th>Nr</th><th>Data</th><th>Zbiorniki</th><th>MCI [%]</th><th>MEI [%]</th></tr>
+{% for x in runs %}<tr><td><a href="/?run_id={{ x.id }}">{{ x.id }}</a></td><td>{{ x.created_at }}</td><td>{{ x.n_reservoirs }}</td><td>{{ x.mci }}</td><td>{{ x.mei }}</td></tr>{% endfor %}
+</table>
+{% else %}
+<div class="meta">Baza nie zawiera jeszcze analiz. Wgraj scenę poniżej albo uruchom: python -m reaqua demo</div>
+{% endif %}
+
+<h2>Nowa analiza: wgraj scenę satelitarną</h2>
+<form class="upload" method="post" action="/upload" enctype="multipart/form-data">
+  <p class="note">Wgraj pasma w jednym metrycznym układzie współrzędnych (np. EPSG:32633). Wymagane: czerwone (B04), bliska podczerwień (B08), SWIR (B11). Analiza wykona się w tle w kontenerze worker; maks. {{ max_upload_mb }} MB.</p>
+  <div class="grid">
+    <label>Czerwone (B04) *<input type="file" name="red" accept=".tif,.tiff" required></label>
+    <label>Bliska podczerwień (B08) *<input type="file" name="nir" accept=".tif,.tiff" required></label>
+    <label>SWIR (B11) *<input type="file" name="swir" accept=".tif,.tiff" required></label>
+    <label>Zielone (B03), opcjonalnie<input type="file" name="green" accept=".tif,.tiff"></label>
+    <label>SCL, opcjonalnie<input type="file" name="scl" accept=".tif,.tiff"></label>
+    <label>Maska gruntów ornych, opcjonalnie<input type="file" name="mask" accept=".tif,.tiff"></label>
+    <label>Nazwa obszaru<input type="text" name="label" maxlength="120" placeholder="np. Gmina Trzemeszno"></label>
+    <label>Czujnik<select name="sensor">{% for key, name in form.sensors %}<option value="{{ key }}">{{ name }}</option>{% endfor %}</select></label>
+    <label>Maks. liczba zbiorników<input type="number" name="param_max_points" min="1" max="500" value="20"></label>
+    <label>Min. odległość [m]<input type="number" name="param_min_distance_m" min="100" max="50000" value="1000"></label>
+    <label>Powierzchnia zbiornika [ha]<input type="number" step="0.1" name="param_reservoir_area_ha" min="0.1" max="100" value="2.0"></label>
+    <label>Kierunek wiatru<select name="param_wind_direction">{% for key, name in form.wind %}<option value="{{ key }}">{{ name }}</option>{% endfor %}</select></label>
+    <label>Gleba<select name="param_soil_type">{% for key, name in form.soil %}<option value="{{ key }}"{% if key == "loam" %} selected{% endif %}>{{ name }}</option>{% endfor %}</select></label>
+    <label>Uprawa dominująca<select name="param_crop">{% for key, name in form.crops %}<option value="{{ key }}">{{ name }}</option>{% endfor %}</select></label>
+    {% if token_required %}<label>Token przesyłania<input type="password" name="token" required></label>{% endif %}
+  </div>
+  <button type="submit">Uruchom analizę</button>
+</form>
+
+{% if scenes %}
+<h2>Ostatnio przesłane sceny</h2>
+<table>
+<tr><th>Scena</th><th>Obszar</th><th>Stan</th><th>Zbiorniki</th><th>Komunikat</th></tr>
+{% for x in scenes %}<tr><td><a href="/scenes/{{ x.id }}">{{ x.id }}</a></td><td>{{ x.label or "-" }}</td><td class="state {{ x.state }}">{{ x.state }}</td><td>{{ x.n_reservoirs if x.n_reservoirs is not none else "-" }}</td><td>{{ x.message }}</td></tr>{% endfor %}
+</table>
+{% endif %}
+{% endblock %}

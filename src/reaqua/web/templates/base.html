@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}ReAqua{% endblock %}</title>
+<style>
+:root{--ink:#1b2a35;--muted:#5d6d7a;--line:#d7dee3;--accent:#1f6f8b;--bg:#f6f8fa}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+main{max-width:1040px;margin:0 auto;padding:24px 18px 56px}h1{font-size:25px;margin:0}h2{font-size:18px;margin:30px 0 10px;border-bottom:2px solid var(--accent);padding-bottom:5px}
+.meta{color:var(--muted);font-size:13px;margin:4px 0 16px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:12px}.card b{display:block;font-size:20px}.card span{font-size:12px;color:var(--muted)}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}svg.chart{width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13.5px}th,td{border:1px solid var(--line);padding:6px 9px;text-align:right}th{background:#eaf1f4}td:first-child,th:first-child{text-align:left}
+.links a{display:inline-block;margin:0 10px 6px 0;color:var(--accent)}footer{margin-top:34px;color:var(--muted);font-size:12.5px}
+form.upload{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 14px}label{display:block;font-size:13px;color:var(--muted)}
+input,select{width:100%;padding:6px;border:1px solid var(--line);border-radius:4px;font:inherit;color:var(--ink);background:#fff}
+button{margin-top:12px;padding:8px 18px;border:0;border-radius:4px;background:var(--accent);color:#fff;font:inherit;cursor:pointer}
+.state{font-weight:600}.state.done{color:#2a7d3f}.state.error{color:#b3261e}.note{color:var(--muted);font-size:13px}
+</style>
+{% block head %}{% endblock %}
+</head>
+<body>
+<main>
+{% block content %}{% endblock %}
+<footer>ReAqua {{ version }} &middot; Autorzy: {{ authors|join(", ") }}</footer>
+</main>
+</body>
+</html>

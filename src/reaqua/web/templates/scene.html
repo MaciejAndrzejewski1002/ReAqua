@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}ReAqua - scena{% endblock %}
+{% block head %}{% if status and status.state in ("queued", "running") %}<meta http-equiv="refresh" content="5">{% endif %}{% endblock %}
+{% block content %}
+<h1>Przetwarzanie sceny</h1>
+{% if error %}
+<p class="state error">Nie przyjęto danych: {{ error }}</p>
+<p><a href="/">Wróć do panelu</a></p>
+{% else %}
+<div class="meta">{{ status.id }}{% if status.label %} &middot; {{ status.label }}{% endif %} &middot; czujnik: {{ status.sensor }}</div>
+<p>Stan: <span class="state {{ status.state }}">{{ status.state }}</span> &middot; {{ status.message }}</p>
+{% if status.state in ("queued", "running") %}<p class="note">Strona odświeża się co 5 sekund. Analiza wykonuje się w kontenerze worker.</p>{% endif %}
+{% if status.state == "done" and status.run_id %}
+<h2>Wyniki</h2>
+<div class="links">
+  <a href="/?run_id={{ status.run_id }}">Panel wyników tej analizy</a>
+  {% for name in status.files %}<a href="/scenes/{{ status.id }}/files/{{ name }}">{{ name }}</a>{% endfor %}
+</div>
+<p class="note">Zbiorniki: {{ status.n_reservoirs }}. Pliki .tif otwierają się w QGIS.</p>
+{% endif %}
+<p><a href="/">Wróć do panelu</a></p>
+{% endif %}
+{% endblock %}
