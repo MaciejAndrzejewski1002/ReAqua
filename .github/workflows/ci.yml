@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - name: Instalacja zależności
+        run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: flake8 src tests scripts
+      - name: Testy
+        run: pytest --cov=reaqua --cov-report=term-missing
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Budowa obrazu
+        run: docker build -t reaqua:ci .
+      - name: Test demonstracyjny w kontenerze
+        run: docker run --rm reaqua:ci python -m reaqua demo --out /tmp/out --db /tmp/demo.gpkg --size 300
+      - name: Test kolejki scen (submit i worker) w kontenerze
+        run: >
+          docker run --rm reaqua:ci sh -c
+          "python -m reaqua submit --folder data/sample --inbox /tmp/in &&
+          python -m reaqua worker --inbox /tmp/in --output /tmp/out --db /tmp/q.gpkg --once"
+
+  plugin:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Paczka wtyczki QGIS
+        run: python scripts/build_plugin.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reaqua-plugin
+          path: dist/reaqua.zip
