@@ -1,0 +1,12 @@
+.git
+.github
+__pycache__
+*.pyc
+.pytest_cache
+.coverage
+output
+dist
+docs
+tests
+.vscode
+.idea

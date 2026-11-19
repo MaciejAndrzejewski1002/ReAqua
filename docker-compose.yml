@@ -1,0 +1,48 @@
+services:
+  seed:
+    build: .
+    image: reaqua:latest
+    command: ["python", "-m", "reaqua", "demo", "--out", "/data/demo", "--db", "/data/reaqua.gpkg", "--if-empty"]
+    volumes:
+      - reaqua-data:/data
+
+  worker:
+    build: .
+    image: reaqua:latest
+    command: ["python", "-m", "reaqua", "worker"]
+    environment:
+      REAQUA_DB: /data/reaqua.gpkg
+      REAQUA_INBOX: /data/inbox
+      REAQUA_OUTPUT: /data/output
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    volumes:
+      - reaqua-data:/data
+
+  web:
+    build: .
+    image: reaqua:latest
+    environment:
+      REAQUA_DB: /data/reaqua.gpkg
+      REAQUA_INBOX: /data/inbox
+      REAQUA_OUTPUT: /data/output
+      REAQUA_MAX_UPLOAD_MB: "500"
+      REAQUA_UPLOAD_TOKEN: ${REAQUA_UPLOAD_TOKEN:-}
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - reaqua-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  reaqua-data:
