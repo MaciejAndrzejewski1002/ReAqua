@@ -1,0 +1,18 @@
+[general]
+name=ReAqua
+qgisMinimumVersion=3.22
+supportsQt6=True
+description=Mała retencja przeciw suszy: lokalizacja zbiorników, kriging zasięgu i raport regionalny w jednej wtyczce
+about=ReAqua łączy trzy moduły wcześniejszych wtyczek (Retention Scout, Retention Kriging, Retention Summary) w jedną wtyczkę z menu kontekstowym warstw. Scout klasyfikuje suszę rolniczą ze scen Sentinel-2 / Landsat (NDVI, NDMI) i proponuje rozmieszczenie zbiorników proporcjonalnie do powierzchni suszy. Kriging modeluje anizotropowy zasięg oddziaływania zbiorników (wiatr, gleba, objętość) i ryzyko resztkowe. Raport generuje bilans, wskaźniki roślinności w scenariuszach, koszty i zapisuje wyniki do bazy GeoPackage. Projekt zespołu Hydronauts z 11. CASSINI Hackathon; zrealizowany w ramach przedmiotu Projekt Geoinformatyczny.
+version=3.0.0
+author=Maciej Andrzejewski, Weronika Zator, Kacper Mikołajczyk, Tomasz Szulski
+email=mandrzejewski1002@gmail.com
+tracker=https://github.com/MaciejAndrzejewski1002/ReAqua/issues
+repository=https://github.com/MaciejAndrzejewski1002/ReAqua
+homepage=https://github.com/MaciejAndrzejewski1002/ReAqua
+tags=drought,retention,kriging,sentinel-2,NDVI,water management,hydrology,agriculture
+category=Raster
+icon=icon.png
+experimental=False
+deprecated=False
+changelog=3.0.0 - połączenie trzech wtyczek, menu kontekstowe warstw, zadania w tle, poprawki metodyczne (patrz docs/ANALIZA_MERYTORYCZNA.md)
