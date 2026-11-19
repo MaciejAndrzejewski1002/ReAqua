@@ -52,7 +52,7 @@ Wynik odpowiada na pytanie decyzyjne: gdzie zlokalizować zbiorniki małej reten
 #### Wymogi uruchomieniowe
 
 - QGIS 3.22 lub nowszy (wtyczka); w QGIS używany jest wbudowany GDAL.
-- Python 3.11+ (wiersz poleceń, panel WWW, testy); zależności w `requirements.txt` z zafiksowanymi wersjami.
+- Python 3.12+ (wiersz poleceń, panel WWW, testy); zależności w `requirements.txt` z zafiksowanymi wersjami.
 - Docker i Docker Compose (opcjonalnie, do uruchomienia bez instalacji bibliotek).
 
 #### Instalacja wtyczki w QGIS
@@ -170,7 +170,7 @@ W panelu, sekcja "Nowa analiza": wgraj pasma (do wypróbowania pliki z `data/sam
 
 ### 5.1 Testy automatyczne i workflows
 
-- **Workflow CI/CD** (`.github/workflows/ci.yml`): przy każdym `push` na `main` i każdym `pull_request` uruchamia `flake8`, `pytest` (Python 3.11 i 3.13), budowę obrazu Docker z testem uruchomienia oraz budowę paczki wtyczki.
+- **Workflow CI/CD** (`.github/workflows/ci.yml`): przy każdym `push` na `main` i każdym `pull_request` uruchamia `flake8`, `pytest` (Python 3.12 i 3.13), budowę obrazu Docker z testem uruchomienia oraz budowę paczki wtyczki.
 - **Status pipeline'u:** znaczek na górze README i zakładka Actions.
 
 Uruchomienie lokalnie:

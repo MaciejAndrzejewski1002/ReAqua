@@ -157,7 +157,7 @@ Dalszą pracę (poprawki, nowe funkcje, dokumentacja) commitujcie na bieżąco d
 
 ### 5.1 Testy automatyczne i workflows
 
-**Workflow CI/CD (`.github/workflows/`): ZROBIONE.** `ci.yml` przy każdym `push` na `main` i każdym `pull_request` uruchamia `flake8` i 53 testy `pytest` (Python 3.11 i 3.13), buduje obraz Docker i paczkę wtyczki. Plik musi trafić do repozytorium z zachowaniem ścieżki `.github/workflows/ci.yml` (katalog z kropką łatwo pominąć przy ręcznym wgrywaniu).
+**Workflow CI/CD (`.github/workflows/`): ZROBIONE.** `ci.yml` przy każdym `push` na `main` i każdym `pull_request` uruchamia `flake8` i 53 testy `pytest` (Python 3.12 i 3.13), buduje obraz Docker i paczkę wtyczki. Plik musi trafić do repozytorium z zachowaniem ścieżki `.github/workflows/ci.yml` (katalog z kropką łatwo pominąć przy ręcznym wgrywaniu).
 
 **Status pipeline'u: DO ZROBIENIA.**
 1. Po pierwszym `git push` otwórz zakładkę Actions i sprawdź, że workflow `CI` zakończył się zielonym znacznikiem dla wszystkich trzech zadań (`test`, `docker`, `plugin`).

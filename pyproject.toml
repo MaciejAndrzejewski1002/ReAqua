@@ -7,7 +7,7 @@ name = "reaqua"
 version = "3.0.0"
 description = "ReAqua - mała retencja przeciw suszy: wtyczka QGIS, CLI i panel WWW"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 license = { text = "MIT" }
 authors = [
   { name = "Maciej Andrzejewski" },

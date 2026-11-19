@@ -31,7 +31,7 @@ git config --global core.autocrlf true
 Ostatnia linia dotyczy Windows i zapobiega ostrzeżeniom o końcach linii. Adres e-mail musi być dodany w GitHub, Settings, Emails (może być adres prywatny `...@users.noreply.github.com`).
 
 4. Zainstaluj Docker Desktop (https://www.docker.com/products/docker-desktop) i uruchom go. Na Windows może poprosić o włączenie WSL 2: zgódź się i zrestartuj komputer.
-5. Zainstaluj QGIS 3.22 lub nowszy (https://qgis.org). Zainstaluj Python 3.11+ i edytor (np. VS Code), jeśli ich nie masz.
+5. Zainstaluj QGIS 3.22 lub nowszy (https://qgis.org). Zainstaluj Python 3.12+ i edytor (np. VS Code), jeśli ich nie masz.
 
 ## Krok 1. Rozpakowanie paczki (Maciej)
 
